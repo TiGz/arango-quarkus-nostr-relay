@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/arango-quarkus-native-example-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/arango-quarkus-nostr-relay-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/arango-quarkus-native-example-jvm
+# docker run -i --rm -p 8080:8080 quarkus/arango-quarkus-nostr-relay-jvm
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.1

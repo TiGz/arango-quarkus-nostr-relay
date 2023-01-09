@@ -1,4 +1,4 @@
-package org.acme.quickstart;
+package org.tigz.nostrelay;
 
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;

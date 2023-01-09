@@ -1,4 +1,4 @@
-# arango-quarkus-native-example project
+# arango-quarkus-nostr-relay
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -9,7 +9,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 Start a local database:
 
 ```shell script
-docker run -e ARANGO_ROOT_PASSWORD=test -p 8529:8529 --rm arangodb:3.6
+docker run -e ARANGO_ROOT_PASSWORD=test -p 8529:8529 --rm arangodb:latest
 ``` 
 
 ## test
@@ -34,10 +34,10 @@ You can run your application in dev mode that enables live coding using:
 ## Packaging and running the application
 
 The application is packageable using `./mvnw package`.
-It produces the executable `arango-quarkus-native-example-1.0-SNAPSHOT-runner.jar` file in `/target` directory.
+It produces the executable `arango-quarkus-nostr-relay-1.0-SNAPSHOT-runner.jar` file in `/target` directory.
 Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/lib` directory.
 
-The application is now runnable using `java -jar target/arango-quarkus-native-example-1.0-SNAPSHOT-runner.jar`.
+The application is now runnable using `java -jar target/arango-quarkus-nostr-relay-1.0-SNAPSHOT-runner.jar`.
 
 ## Creating a native executable
 
@@ -45,7 +45,7 @@ You can create a native executable using: `./mvnw package -Pnative`.
 
 Or you can use Docker to build the native executable using: `./mvnw package -Pnative -Dquarkus.native.container-build=true`.
 
-You can then execute your binary: `./target/arango-quarkus-native-example-1.0-SNAPSHOT-runner`
+You can then execute your binary: `./target/arango-quarkus-nostr-relay-1.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image-guide .
 
