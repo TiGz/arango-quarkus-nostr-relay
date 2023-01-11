@@ -1,6 +1,7 @@
 package org.tigz.nostrelay;
 
 import com.arangodb.entity.ArangoDBVersion;
+import org.tigz.nostrelay.db.ArangoService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

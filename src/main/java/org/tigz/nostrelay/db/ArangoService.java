@@ -1,4 +1,4 @@
-package org.tigz.nostrelay;
+package org.tigz.nostrelay.db;
 
 import com.arangodb.ArangoDB;
 import com.arangodb.entity.ArangoDBVersion;
@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 /**
- * @author Michele Rastelli
+ * ArangoDB service
  */
 @ApplicationScoped
 public class ArangoService {

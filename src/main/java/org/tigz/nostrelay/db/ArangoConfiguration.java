@@ -1,4 +1,4 @@
-package org.tigz.nostrelay;
+package org.tigz.nostrelay.db;
 
 import com.arangodb.ArangoDB;
 import com.arangodb.mapping.ArangoJack;
