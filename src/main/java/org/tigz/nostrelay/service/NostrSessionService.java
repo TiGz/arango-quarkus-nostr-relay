@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.tigz.nostrelay.beans.NostrEvent;
+import org.tigz.nostrelay.db.ArangoService;
 import org.tigz.nostrelay.ws.NostrSession;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -25,10 +26,12 @@ public class NostrSessionService {
 
     private final ObjectMapper mapper;
 
+    private ArangoService arangoService;
+
     final Map<String, NostrSession> sessions = new ConcurrentHashMap<>();
 
     public NostrSession createNewSession(Session websocketSession){
-        NostrSession nostrSession = new NostrSession(websocketSession, incomingMessageRouter);
+        NostrSession nostrSession = new NostrSession(websocketSession, this);
         sessions.put(websocketSession.getId(), nostrSession);
         return nostrSession;
     }
@@ -37,7 +40,23 @@ public class NostrSessionService {
         sessions.remove(websocketSession.getId());
     }
 
-    public void sendEventToSubscribedSessions(NostrEvent event){
+    public void processEvent(String eventJson, NostrSession session){
+        try{
+            NostrEvent event = mapper.readValue(eventJson, NostrEvent.class);
+            validateEvent(event);
+            arangoService.saveEvent(event);
+            sendEventToSubscribedSessions(event);
+        }
+        catch(Exception e){
+            log.error("Error parsing event: {}", eventJson, e);
+        }
+    }
+
+    private void validateEvent(NostrEvent event) {
+        //@TODO
+    }
+
+    private void sendEventToSubscribedSessions(NostrEvent event){
         sessions.values().forEach(session -> {
             if(session.isSubscribedToEvent(event)){
                 try {

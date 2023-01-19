@@ -1,6 +1,7 @@
 package org.tigz.nostrelay.ws;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class NostrSession implements MessageHandler.Whole<String> {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     private final Session websocketSession;
     private final NostrSessionService sessionService;
 
@@ -29,7 +32,7 @@ public class NostrSession implements MessageHandler.Whole<String> {
 
     @Override
     public void onMessage(String message) {
-        incomingMessageRouter.processIncomingMessage(message, this);
+        processIncomingMessage(message, this);
     }
 
 
@@ -68,28 +71,20 @@ public class NostrSession implements MessageHandler.Whole<String> {
      */
     private void processEvent(String eventJson, NostrSession session) throws JsonProcessingException {
         log.debug("Processing event: {} for session with id: {}", eventJson, session.getWebsocketSession().getId());
-        NostrEvent event = mapper.readValue(eventJson, NostrEvent.class);
-        event.setOriginalJson(eventJson);
-        log.debug("Event as Json: {}", );
-        if (eventListeners != null) {
-            eventListeners.forEach(listener -> listener.onIncomingNostrEvent(event, session));
+        sessionService.processEvent(eventJson, session);
+    }
+
+    private void processReq(String subscriptionId, String filtersJson, NostrSession session) {
+        try{
+            NostrFilter filter = mapper.readValue(filtersJson, NostrFilter.class);
+            filterMap.put(subscriptionId, filter);
+        }
+        catch(Exception e){
+            log.error("Error parsing filter: {}", filtersJson, e);
         }
     }
 
-    private void processReq(String subscriptionId, String filtersJson, NostrSession session) throws JsonProcessingException {
-        NostrFilter filters = mapper.readValue(filtersJson, NostrFilter.class);
-        session.subscribe(subscriptionId, filters);
-    }
-
     private void processClose(String subscriptionId, NostrSession session) {
-        session.unsubscribe(subscriptionId);
-    }
-
-    public void subscribe(String subscriptionId, NostrFilter filters){
-        filterMap.put(subscriptionId, filters);
-    }
-
-    public void unsubscribe(String subscriptionId) {
         filterMap.remove(subscriptionId);
         log.debug("Removed subscription: {}", subscriptionId);
     }

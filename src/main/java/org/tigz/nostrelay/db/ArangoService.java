@@ -1,7 +1,9 @@
 package org.tigz.nostrelay.db;
 
+import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDB;
 import com.arangodb.entity.ArangoDBVersion;
+import org.tigz.nostrelay.beans.NostrEvent;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -23,4 +25,14 @@ public class ArangoService {
         return arango.getVersion();
     }
 
+    public void saveEvent(NostrEvent event) {
+        ArangoCollection events = arango.db().collection("events");
+        if (!events.exists()){
+            arango.db().createCollection("events");
+            events = arango.db().collection("events");
+        }
+
+        // insert document into DB
+        events.insertDocument(event);
+    }
 }
