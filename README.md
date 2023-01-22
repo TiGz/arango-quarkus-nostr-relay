@@ -55,3 +55,22 @@ If you want to learn more about building native executables, please consult http
 ```shell script
 curl http://localhost:8080/version
 ```
+
+
+## Example NOSTR Event
+
+
+    {"id": "1910092961fe1ae6b1ce8eecc1f711a025d0c23986e4257a188bf57d296f313a","pubkey":"3b2e2252f113791ec8ec973b8285021a7c49e80d5c9f54d2b28b610b303b8425","created_at":1674391523,"kind":1,"tags":[],"content":"test","sig":"eb3cf16a2441243cd35e73642ade2b1a95a8b16c3c24e1e8501b0f54438e87f0e77271d0981ebe977f962794f2cf2291b48c8e4c4dee62909a9980bda7b57b53"}
+
+    ["EVENT",{"id": "1910092961fe1ae6b1ce8eecc1f711a025d0c23986e4257a188bf57d296f313a","pubkey":"3b2e2252f113791ec8ec973b8285021a7c49e80d5c9f54d2b28b610b303b8425","created_at":1674391523,"kind":1,"tags":[],"content":"test","sig":"eb3cf16a2441243cd35e73642ade2b1a95a8b16c3c24e1e8501b0f54438e87f0e77271d0981ebe977f962794f2cf2291b48c8e4c4dee62909a9980bda7b57b53"}]
+
+
+    {
+    "id": "1910092961fe1ae6b1ce8eecc1f711a025d0c23986e4257a188bf57d296f313a",
+    "pubkey": "3b2e2252f113791ec8ec973b8285021a7c49e80d5c9f54d2b28b610b303b8425",
+    "created_at": 1674391523,
+    "kind": 1,
+    "tags": [],
+    "content": "test",
+    "sig": "eb3cf16a2441243cd35e73642ade2b1a95a8b16c3c24e1e8501b0f54438e87f0e77271d0981ebe977f962794f2cf2291b48c8e4c4dee62909a9980bda7b57b53"
+    }

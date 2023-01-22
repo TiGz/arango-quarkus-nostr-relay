@@ -3,8 +3,11 @@ package org.tigz.nostrelay.db;
 import com.arangodb.ArangoCollection;
 import com.arangodb.ArangoDB;
 import com.arangodb.entity.ArangoDBVersion;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.tigz.nostrelay.beans.NostrEvent;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -12,14 +15,11 @@ import javax.inject.Inject;
  * ArangoDB service
  */
 @ApplicationScoped
+@RequiredArgsConstructor
+@Slf4j
 public class ArangoService {
 
     private final ArangoDB arango;
-
-    @Inject
-    public ArangoService(final ArangoDB arango) {
-        this.arango = arango;
-    }
 
     public ArangoDBVersion getVersion() {
         return arango.getVersion();
@@ -34,5 +34,10 @@ public class ArangoService {
 
         // insert document into DB
         events.insertDocument(event);
+    }
+
+    @PostConstruct
+    public void init(){
+        log.info("ArangoService initialized");
     }
 }

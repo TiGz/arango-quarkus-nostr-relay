@@ -3,6 +3,7 @@ package org.tigz.nostrelay.beans;
 import com.arangodb.entity.DocumentField;
 import com.arangodb.entity.Key;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,10 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class NostrEvent {
 
-    @Key
+    @JsonIgnore
     @NotNull
     private String id;
     @NotNull
@@ -54,6 +56,17 @@ public class NostrEvent {
 
     @JsonIgnore
     private String originalJson;
+
+    // when serialising to ArangoDB we need to map the event id to the _key field
+    @JsonProperty("_key")
+    public String getId(){
+        return id;
+    }
+
+    @JsonProperty("id")
+    public void setId(String id){
+        this.id = id;
+    }
 
     public List<Tag> getETags(){
         if ( this.tags == null ) return Collections.emptyList();

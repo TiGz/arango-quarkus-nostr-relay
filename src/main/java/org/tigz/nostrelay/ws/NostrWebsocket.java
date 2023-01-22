@@ -2,8 +2,10 @@ package org.tigz.nostrelay.ws;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jboss.logging.Logger;
 import org.tigz.nostrelay.service.NostrSessionService;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -15,24 +17,32 @@ import javax.websocket.Session;
 /**
  * Websocker endpoint for Nostr on /
  */
-@ServerEndpoint("/")
+@ServerEndpoint("/ws")
 @ApplicationScoped
 @RequiredArgsConstructor
 @Slf4j
 public class NostrWebsocket {
 
+    private static final Logger LOG = Logger.getLogger(NostrWebsocket.class);
+
     private final NostrSessionService nostrSessionService;
+
+    @PostConstruct
+    public void init(){
+        LOG.info("NostrWebsocket initialized");
+        log.info("NostrWebsocket initialized");
+    }
 
     @OnOpen
     public void onOpen(Session session) {
         nostrSessionService.createNewSession(session);
-        log.debug("Session opened: {}", session.getId());
+        log.info("Session opened: {}", session.getId());
     }
 
     @OnClose
     public void onClose(Session session) {
         nostrSessionService.closeSession(session);
-        log.debug("Session closed: {}", session.getId());
+        log.info("Session closed: {}", session.getId());
     }
 
     @OnError

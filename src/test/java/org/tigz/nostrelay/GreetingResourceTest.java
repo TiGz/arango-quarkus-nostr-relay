@@ -22,4 +22,5 @@ public class GreetingResourceTest {
         assertThat(server).isEqualTo("arango");
     }
 
+
 }
