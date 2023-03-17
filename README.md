@@ -1,8 +1,8 @@
 # arango-quarkus-nostr-relay
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Quarkus powered Nostr Relay backed by ArangoDB - very much a work in progress :-)
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+https://nostr.com
 
 ## prerequisites
 
